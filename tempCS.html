@@ -1,0 +1,188 @@
+<!DOCTYPE HTML>
+<!--
+	Forty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Temperature Controller</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+				<!-- Note: The "styleN" class below should match that of the banner element. -->
+					<header id="header" class="alt style2">
+						
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+				<nav id="menu">
+					<ul class="links">
+						<li><a href="index.html">Home</a></li>
+						<li><a href="https://u.osu.edu/engr118226419spr22mcgloners/home/">Monorail AEV</a></li>
+						<li><a href="simon.html">Simon Game</a></li>
+						<li><a href="tempCS.html">Temperature Simulation</a></li>
+						<li><a href="glossary.html">Glossary</a></li>
+						<li><a href="TrajModel.html">Trajectory Model</a></li>
+						<li><a href="rssAggregator.html">RSS Aggregator</a></li>
+					</ul>
+					
+				</nav>
+
+				<!-- Banner -->
+				<!-- Note: The "styleN" class below should match that of the header element. -->
+					<section id="banner" class="style2">
+						<div class="inner">
+							<span class="image">
+								<img src="images/pic07.jpg" alt="" />
+							</span>
+							<header class="major">
+								<h1>Temperature Controller</h1>
+							</header>
+							<div class="content">
+								<p>Arduino Controlled Temperature Controller</p>
+							</div>
+						</div>
+					</section>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- One -->
+							<section id="one">
+								<div class="inner">
+									<header class="major">
+										<h2>Air Cooling</h2>
+									</header>
+									<p>Air cooling is a method of cooling that uses air to dissipate heat. 
+										Cool air is circulated through the system, helping to keep the area within 
+										the desired temperature range.</p>
+								</div>
+							</section>
+
+						<!-- Two -->
+							<section id="two" class="spotlights">
+								<section>
+									<a href="generic.html" class="image">
+										<img src="images/ACUnit.PNG" alt="" data-position="center center" />
+									</a>
+									<div class="content">
+										<div class="inner">
+											<header class="major">
+												<h3>What?</h3>
+											</header>
+											<p> An Arduino-controlled cooling system, that uses airflow to cool the surrounding system. The setup is to be two interconnected rooms approximately the size of a computer tower each with its own temperature sensor. Based on the readings of the sensors the Arduino Uno will use the fans to create airflow to regulate the temperature of the rooms, similar to the cooling concept of PCs.
+											</p>
+											
+										</div>
+									</div>
+								</section>
+								<section>
+									<a href="generic.html" class="image">
+										<img src="images/microcontroller.jpg" alt="" data-position="top center" />
+									</a>
+									<div class="content">
+										<div class="inner">
+											<header class="major">
+												<h3>How?</h3>
+											</header>
+											<p> Used Arduino software to control motor speed to cool rooms based off the temperature read in by the DHT11 temperature sensors. <br> Components:
+											</p>
+											<ul>
+												<li>Arduino Uno</li>
+												<li>Power Supply Board</li>
+												<li>l293d Motor Driver</li>
+												<li>DC Motor 2x</li>
+												<li>DHT11 Temperature and Humidity Sensor 2x</li>
+												<li>9V Battery</li>
+											</ul>
+											
+										</div>
+									</div>
+								</section>
+								<section>
+									<a href="generic.html" class="image">
+										<img src="images/circuit.jpg" alt="" data-position="25% 25%" />
+									</a>
+									<div class="content">
+										<div class="inner">
+											<header class="major">
+												<h3>Results</h3>
+											</header>
+											<p>Circuit controls are functional. Once installed, it will begin cooling the insides of the two rooms as soon as the power supply is switched on. The fans will rotate at a certain speed depending on the temperature of the components, and the speed will increase or decrease as needed in order to maintain the desired temperature.
+												<br>To improve upon the system I plan to add a user interface. An LCD display monitor and 2 push buttons will allow users to select the desired temperature without having to re-upload the program.
+												</p>
+											
+											<ul class="actions">
+												<li><a href="docs/TempController.txt" class="button">View Code</a></li>
+											</ul>
+										</div>
+									</div>
+								</section>
+							</section>
+
+						
+
+					</div>
+
+				<!-- Contact -->
+					<section id="contact">
+						<div class="inner">
+							
+							<section class="split">
+								<section>
+									<div class="contact-method">
+										<span class="icon solid alt fa-envelope"></span>
+										<h3>Email</h3>
+										<a href="mailto:">Fong.146@buckeyemail.osu.edu</a>
+									</div>
+								</section>
+								
+								<section>
+									<div class="contact-method">
+										<span class="icon solid alt fa-home"></span>
+										<h3>Location</h3>
+										<span> Columbus, OH</span>
+									</div>
+								</section>
+							</section>
+						</div>
+					</section>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<ul class="icons">
+								<li><a href="https://github.com/JFong21" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+								<li><a href="https://www.linkedin.com/in/joe-fong-rt/" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+							</ul>
+							<ul class="copyright">
+								<li>&copy; 2023</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

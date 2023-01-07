@@ -1,0 +1,74 @@
+#include <DFRobot_DHT11.h>
+
+
+DFRobot_DHT11 DHT1;
+DFRobot_DHT11 DHT2;
+
+#define DHT11_PIN1 7
+#define DHT11_PIN2 13
+
+int desiredTemp = 22;
+int speedPin1=5;
+int dir1=4;
+int dir2=3;
+int mSpeed1=0;
+int speedPin2=11;
+int dir3=10;
+int dir4=9;
+int mSpeed2=0;
+
+void setup(){
+  pinMode(speedPin1,OUTPUT);
+  pinMode(dir1,OUTPUT);
+  pinMode(dir2,OUTPUT);
+  pinMode(speedPin2,OUTPUT);
+  pinMode(dir3,OUTPUT);
+  pinMode(dir4,OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop(){
+  DHT1.read(DHT11_PIN1);
+  DHT2.read(DHT11_PIN2);
+  Serial.print("Temperature 1 = ");
+  Serial.println(DHT1.temperature);
+  Serial.print("Humidity 1 = ");
+  Serial.println(DHT1.humidity);
+  Serial.print("Temperature 2 = ");
+  Serial.println(DHT2.temperature);
+  Serial.print("Humidity 2 = ");
+  Serial.println(DHT2.humidity);
+
+  digitalWrite(dir1,HIGH);
+  digitalWrite(dir2,LOW);
+  analogWrite(speedPin1,mSpeed1);
+  digitalWrite(dir3,HIGH);
+  digitalWrite(dir4,LOW);
+  analogWrite(speedPin2,mSpeed2);
+
+  int difference1 = DHT1.temperature - desiredTemp;
+  int difference2 = DHT2.temperature - desiredTemp;
+
+  if (difference1 > 5){
+    mSpeed1 = 255;
+  } else if (difference1 > 3){
+    mSpeed1 = 200;
+  } else if (difference1 > 0){
+    mSpeed1 = 150;
+  } else {
+    mSpeed1 = 0;
+  }
+
+  if (difference2 > 5){
+    mSpeed2 = 255;
+  } else if (difference2 > 3){
+    mSpeed2 = 200;
+  } else if (difference2 > 0){
+    mSpeed2 = 150;
+  } else {
+    mSpeed2 = 0;
+  }
+
+  
+  delay(1000);  
+}
