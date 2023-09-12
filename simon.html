@@ -96,16 +96,15 @@
 												<h3>How?</h3>
 											</header>
 											<p>To create the Simon game many digital circuits were made and tested to fit within 
-												the scope of the functions of the game. This involved creating a hierarchy 
-												of systems and subsystems to control the game. At the top level, there was a sound 
-												synthesizer used to play the correct tone at every phase of the game, a debouncing 
-												circuit used to detect player input, a random counter used to create the order of the 
-												game, and lastly, the system controller which contained the code for every state of 
-												the game that would receive and send data interconnecting the entire circuit. These 
-												systems were created using three methods: gate-level block diagram, Altera Quartus 
-												mega functions, and VHDL. To test them timing simulations were run using ModelSim. 
-												In order to make the project synchronous it was run on two clocks, 50 MHz for the 
-												sound decoder and 48 MHz for every other top-level entry.
+												the scope of the functions of the game. This involved creating and testing a multitude
+												of modules to create the FPGA design. To list some of the modules, there was an audio 
+												synthesizer used to generate signals for tones at every phase of the game, a debouncing 
+												circuit used to detect player input safely, a random counter used to create the order of the 
+												game, and the system controller which controlled every state of 
+												the game receiving and transmitting data interconnecting the entire circuit. These. 
+												systems were created using Altera Quartus' CAD block diagrams and VHDL
+												To test them simulations were run using ModelSim. 
+												
 
 											</p>
 											
