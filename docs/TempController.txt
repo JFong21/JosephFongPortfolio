@@ -1,6 +1,5 @@
 #include <DFRobot_DHT11.h>
 
-
 DFRobot_DHT11 DHT1;
 DFRobot_DHT11 DHT2;
 
@@ -8,26 +7,33 @@ DFRobot_DHT11 DHT2;
 #define DHT11_PIN2 13
 
 int desiredTemp = 22;
-int speedPin1=5;
-int dir1=4;
-int dir2=3;
-int mSpeed1=0;
-int speedPin2=11;
-int dir3=10;
-int dir4=9;
-int mSpeed2=0;
+int speedPin1 = 5;
+int dir1 = 4;
+int dir2 = 3;
+int mSpeed1 = 0;
+int speedPin2 = 11;
+int dir3 = 10;
+int dir4 = 9;
+int mSpeed2 = 0;
 
-void setup(){
-  pinMode(speedPin1,OUTPUT);
-  pinMode(dir1,OUTPUT);
-  pinMode(dir2,OUTPUT);
-  pinMode(speedPin2,OUTPUT);
-  pinMode(dir3,OUTPUT);
-  pinMode(dir4,OUTPUT);
+// Derivative control variables
+float Kd = 0.5; // Derivative gain
+int previous_error1 = 0;
+int previous_error2 = 0;
+unsigned long previous_time = 0;
+
+void setup() {
+  pinMode(speedPin1, OUTPUT);
+  pinMode(dir1, OUTPUT);
+  pinMode(dir2, OUTPUT);
+  pinMode(speedPin2, OUTPUT);
+  pinMode(dir3, OUTPUT);
+  pinMode(dir4, OUTPUT);
   Serial.begin(9600);
+  previous_time = millis();
 }
 
-void loop(){
+void loop() {
   DHT1.read(DHT11_PIN1);
   DHT2.read(DHT11_PIN2);
   Serial.print("Temperature 1 = ");
@@ -39,36 +45,55 @@ void loop(){
   Serial.print("Humidity 2 = ");
   Serial.println(DHT2.humidity);
 
-  digitalWrite(dir1,HIGH);
-  digitalWrite(dir2,LOW);
-  analogWrite(speedPin1,mSpeed1);
-  digitalWrite(dir3,HIGH);
-  digitalWrite(dir4,LOW);
-  analogWrite(speedPin2,mSpeed2);
+  digitalWrite(dir1, HIGH);
+  digitalWrite(dir2, LOW);
+  analogWrite(speedPin1, mSpeed1);
+  digitalWrite(dir3, HIGH);
+  digitalWrite(dir4, LOW);
+  analogWrite(speedPin2, mSpeed2);
 
-  int difference1 = DHT1.temperature - desiredTemp;
-  int difference2 = DHT2.temperature - desiredTemp;
+  int error1 = DHT1.temperature - desiredTemp;
+  int error2 = DHT2.temperature - desiredTemp;
 
-  if (difference1 > 5){
+  // Calculate time difference
+  unsigned long current_time = millis();
+  float delta_time = (current_time - previous_time) / 1000.0; // Convert to seconds
+
+  // Calculate derivative terms
+  float derivative1 = (error1 - previous_error1) / delta_time;
+  float derivative2 = (error2 - previous_error2) / delta_time;
+
+  // Update previous errors
+  previous_error1 = error1;
+  previous_error2 = error2;
+
+  // Update previous time
+  previous_time = current_time;
+
+  // Incorporate derivative control into motor speed
+  if (error1 > 5) {
     mSpeed1 = 255;
-  } else if (difference1 > 3){
-    mSpeed1 = 200;
-  } else if (difference1 > 0){
-    mSpeed1 = 150;
+  } else if (error1 > 3) {
+    mSpeed1 = 200 + Kd * derivative1;
+  } else if (error1 > 0) {
+    mSpeed1 = 150 + Kd * derivative1;
   } else {
     mSpeed1 = 0;
   }
 
-  if (difference2 > 5){
+  if (error2 > 5) {
     mSpeed2 = 255;
-  } else if (difference2 > 3){
-    mSpeed2 = 200;
-  } else if (difference2 > 0){
-    mSpeed2 = 150;
+  } else if (error2 > 3) {
+    mSpeed2 = 200 + Kd * derivative2;
+  } else if (error2 > 0) {
+    mSpeed2 = 150 + Kd * derivative2;
   } else {
     mSpeed2 = 0;
   }
 
-  
-  delay(1000);  
+  // Ensure motor speeds are within valid range
+  mSpeed1 = constrain(mSpeed1, 0, 255);
+  mSpeed2 = constrain(mSpeed2, 0, 255);
+
+  delay(1000);
 }
