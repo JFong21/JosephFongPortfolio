@@ -95,15 +95,13 @@
 											<header class="major">
 												<h3>How?</h3>
 											</header>
-											<p>To create the Simon game many digital circuits were made and tested to fit within 
-												the scope of the functions of the game. This involved creating and testing a multitude
-												of modules to create the FPGA design. To list some of the modules, there was an audio 
-												synthesizer used to generate signals for tones at every phase of the game, a debouncing 
-												circuit used to detect player input safely, a random counter used to create the order of the 
-												game, and the system controller which controlled every state of 
-												the game receiving and transmitting data interconnecting the entire circuit. These
-												systems were created using Altera Quartus' CAD block diagrams and VHDL.
-												To test them simulations and testbenches were completed using ModelSim. 
+											<p>Leveraging both hardware description language (VHDL) and schematic design entry in Quartus my team created a fully functional FPGA-based game. Multiple digital circuits were implemented and verified for functionality and timing, contributing to the overall system. Key modules included:
+Audio Synthesizer: Designed to generate audio signals corresponding to specific tones for each step in the game sequence, for auditory feedback and song.
+Debouncing Circuit: Implemented to ensure stable and accurate input capture from the physical pushbuttons.
+Pseudo-Random Sequence Generator: Generated the randomized button sequences for the game.
+State Controller (FSM): Managed the core game logic, controlling state transitions between idle, sequence generation, player input, win/lose, and reset states. The FSM handled communication between all subsystems and ensured proper data flow across the circuit.
+Simulation and verification were performed using ModelSim, where testbenches were developed to validate the correct operation of each module under various conditions. Timing analysis and signal integrity checks were completed to ensure reliable performance on the FPGA.
+
 												
 
 											</p>
