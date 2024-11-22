@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<!--
+    Forty by HTML5 UP
+    html5up.net | @ajlkn
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+<head>
+    <title>4x4 Multiplier Circuit</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+</head>
+<body class="is-preload">
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+        <!-- Header -->
+        <header id="header" class="alt style2">
+            <nav>
+                <a href="#menu">Menu</a>
+            </nav>
+        </header>
+
+        <!-- Menu -->
+        <nav id="menu">
+            <ul class="links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="simon.html">Simon Game</a></li>
+                <li><a href="tempCS.html">Temperature Simulation</a></li>
+				<li><a href="TrajModel.html">Trajectory Model</a></li>
+				<li><a href="rssAggregator.html">RSS Aggregator</a></li>
+            </ul>
+        </nav>
+
+        <!-- Banner -->
+        <section id="banner" class="style2">
+            <div class="inner">
+                <span class="image">
+                    <img src="images/Multiplier.PNG" alt="4x4 Multiplier Circuit" />
+                </span>
+                <header class="major">
+                    <h1>4x4 Multiplier Circuit</h1>
+                </header>
+                <div class="content">
+                    <p>Designed and implemented a 4x4 sequential multiplier circuit using VHDL.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main -->
+        <div id="main">
+
+            <!-- One -->
+            <section id="one">
+                <div class="inner">
+                    <header class="major">
+                        <h2>Overview</h2>
+                    </header>
+                    <p>This project implemented a 4x4 sequential multiplier circuit using VHDL. The circuit multiplies two 4-bit binary numbers, producing an 8-bit result. Key components include shift registers, a counter, and a full adder for iterative computation.</p>
+                </div>
+            </section>
+
+            <!-- Two -->
+            <section id="two" class="spotlights">
+                <section>
+                    <a href="images/Multiplier.PNG" class="image">
+                        <img src="images/Multiplier.PNG" alt="Multiplier Circuit Diagram" data-position="center center" />
+                    </a>
+                    <div class="content">
+                        <div class="inner">
+                            <header class="major">
+                                <h3>Design</h3>
+                            </header>
+                            <p>The multiplier design used two 4-bit shift registers to store inputs, a 9-bit custom shift register for the intermediate results, and a 4-bit counter to control iteration. The system controller managed data flow and computation timing, while the full adder computed partial products iteratively.</p>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <a href="images/Wave.PNG" class="image">
+                        <img src="images/Wave.PNG" alt="Simulation Results" data-position="top center" />
+                    </a>
+                    <div class="content">
+                        <div class="inner">
+                            <header class="major">
+                                <h3>Simulation</h3>
+                            </header>
+                            <p>Verified functionality using ISim simulation software. The circuit produced accurate results for a range of test cases, confirming the correct implementation of sequential multiplication.</p>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <a href="https://github.com/JFong21/4x4Multiplier" class="button">View VHDL Code</a>
+                </section>
+            </section>
+
+        </div>
+
+        <!-- Contact -->
+        <section id="contact">
+            <div class="inner">
+                <section class="split">
+                    <section>
+                        <div class="contact-method">
+                            <span class="icon solid alt fa-envelope"></span>
+                            <h3>Email</h3>
+                            <a href="mailto:Fong.146@buckeyemail.osu.edu">Fong.146@buckeyemail.osu.edu</a>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="contact-method">
+                            <span class="icon solid alt fa-home"></span>
+                            <h3>Location</h3>
+                            <span>Columbus, OH</span>
+                        </div>
+                    </section>
+                </section>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer id="footer">
+            <div class="inner">
+                <ul class="icons">
+                    <li><a href="https://github.com/JFong21" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+                    <li><a href="https://www.linkedin.com/in/joe-fong-rt/" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+                </ul>
+                <ul class="copyright">
+                    <li>&copy; 2024</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+                </ul>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+
+</body>
+</html>
