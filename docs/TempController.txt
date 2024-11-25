@@ -1,99 +1,119 @@
 #include <DFRobot_DHT11.h>
 
-DFRobot_DHT11 DHT1;
-DFRobot_DHT11 DHT2;
+// Initialize DHT11 sensors
+DFRobot_DHT11 sensor1;
+DFRobot_DHT11 sensor2;
 
+// Pin definitions for DHT11 sensors
 #define DHT11_PIN1 7
 #define DHT11_PIN2 13
 
-int desiredTemp = 22;
-int speedPin1 = 5;
-int dir1 = 4;
-int dir2 = 3;
-int mSpeed1 = 0;
-int speedPin2 = 11;
-int dir3 = 10;
-int dir4 = 9;
-int mSpeed2 = 0;
+// Desired temperature in degrees Celsius
+const int desiredTemperature = 22;
+
+// Motor control pin definitions
+const int motor1SpeedPin = 5;
+const int motor1DirPin1 = 4;
+const int motor1DirPin2 = 3;
+
+const int motor2SpeedPin = 11;
+const int motor2DirPin1 = 10;
+const int motor2DirPin2 = 9;
+
+// Motor speed variables
+int motor1Speed = 0;
+int motor2Speed = 0;
 
 // Derivative control variables
-float Kd = 0.5; // Derivative gain
-int previous_error1 = 0;
-int previous_error2 = 0;
-unsigned long previous_time = 0;
+const float Kd = 0.5; // Derivative gain
+int prevErrorMotor1 = 0;
+int prevErrorMotor2 = 0;
+unsigned long prevTime = 0;
 
 void setup() {
-  pinMode(speedPin1, OUTPUT);
-  pinMode(dir1, OUTPUT);
-  pinMode(dir2, OUTPUT);
-  pinMode(speedPin2, OUTPUT);
-  pinMode(dir3, OUTPUT);
-  pinMode(dir4, OUTPUT);
+  // Initialize motor pins as outputs
+  pinMode(motor1SpeedPin, OUTPUT);
+  pinMode(motor1DirPin1, OUTPUT);
+  pinMode(motor1DirPin2, OUTPUT);
+
+  pinMode(motor2SpeedPin, OUTPUT);
+  pinMode(motor2DirPin1, OUTPUT);
+  pinMode(motor2DirPin2, OUTPUT);
+
+  // Initialize serial communication for debugging
   Serial.begin(9600);
-  previous_time = millis();
+
+  // Store the initial time
+  prevTime = millis();
 }
 
 void loop() {
-  DHT1.read(DHT11_PIN1);
-  DHT2.read(DHT11_PIN2);
-  Serial.print("Temperature 1 = ");
-  Serial.println(DHT1.temperature);
-  Serial.print("Humidity 1 = ");
-  Serial.println(DHT1.humidity);
-  Serial.print("Temperature 2 = ");
-  Serial.println(DHT2.temperature);
-  Serial.print("Humidity 2 = ");
-  Serial.println(DHT2.humidity);
+  // Read data from DHT11 sensors
+  sensor1.read(DHT11_PIN1);
+  sensor2.read(DHT11_PIN2);
 
-  digitalWrite(dir1, HIGH);
-  digitalWrite(dir2, LOW);
-  analogWrite(speedPin1, mSpeed1);
-  digitalWrite(dir3, HIGH);
-  digitalWrite(dir4, LOW);
-  analogWrite(speedPin2, mSpeed2);
+  // Display temperature and humidity data
+  Serial.print("Temperature Sensor 1: ");
+  Serial.println(sensor1.temperature);
+  Serial.print("Humidity Sensor 1: ");
+  Serial.println(sensor1.humidity);
+  Serial.print("Temperature Sensor 2: ");
+  Serial.println(sensor2.temperature);
+  Serial.print("Humidity Sensor 2: ");
+  Serial.println(sensor2.humidity);
 
-  int error1 = DHT1.temperature - desiredTemp;
-  int error2 = DHT2.temperature - desiredTemp;
+  // Set motor direction
+  digitalWrite(motor1DirPin1, HIGH);
+  digitalWrite(motor1DirPin2, LOW);
 
-  // Calculate time difference
-  unsigned long current_time = millis();
-  float delta_time = (current_time - previous_time) / 1000.0; // Convert to seconds
+  digitalWrite(motor2DirPin1, HIGH);
+  digitalWrite(motor2DirPin2, LOW);
 
-  // Calculate derivative terms
-  float derivative1 = (error1 - previous_error1) / delta_time;
-  float derivative2 = (error2 - previous_error2) / delta_time;
+  // Compute temperature errors
+  int errorMotor1 = sensor1.temperature - desiredTemperature;
+  int errorMotor2 = sensor2.temperature - desiredTemperature;
 
-  // Update previous errors
-  previous_error1 = error1;
-  previous_error2 = error2;
+  // Calculate time difference in seconds
+  unsigned long currentTime = millis();
+  float deltaTime = (currentTime - prevTime) / 1000.0;
 
-  // Update previous time
-  previous_time = current_time;
+  // Calculate derivative terms for each motor
+  float derivativeMotor1 = (errorMotor1 - prevErrorMotor1) / deltaTime;
+  float derivativeMotor2 = (errorMotor2 - prevErrorMotor2) / deltaTime;
 
-  // Incorporate derivative control into motor speed
-  if (error1 > 5) {
-    mSpeed1 = 255;
-  } else if (error1 > 3) {
-    mSpeed1 = 200 + Kd * derivative1;
-  } else if (error1 > 0) {
-    mSpeed1 = 150 + Kd * derivative1;
-  } else {
-    mSpeed1 = 0;
-  }
+  // Update previous error values
+  prevErrorMotor1 = errorMotor1;
+  prevErrorMotor2 = errorMotor2;
 
-  if (error2 > 5) {
-    mSpeed2 = 255;
-  } else if (error2 > 3) {
-    mSpeed2 = 200 + Kd * derivative2;
-  } else if (error2 > 0) {
-    mSpeed2 = 150 + Kd * derivative2;
-  } else {
-    mSpeed2 = 0;
-  }
+  // Update the previous time
+  prevTime = currentTime;
 
-  // Ensure motor speeds are within valid range
-  mSpeed1 = constrain(mSpeed1, 0, 255);
-  mSpeed2 = constrain(mSpeed2, 0, 255);
+  // Compute motor speeds with derivative control
+  motor1Speed = calculateMotorSpeed(errorMotor1, derivativeMotor1);
+  motor2Speed = calculateMotorSpeed(errorMotor2, derivativeMotor2);
 
+  // Write motor speeds
+  analogWrite(motor1SpeedPin, motor1Speed);
+  analogWrite(motor2SpeedPin, motor2Speed);
+
+  // Wait for 1 second before repeating the loop
   delay(1000);
+}
+
+// Function to calculate motor speed based on error and derivative
+int calculateMotorSpeed(int error, float derivative) {
+  int speed = 0;
+
+  if (error > 5) {
+    speed = 255;
+  } else if (error > 3) {
+    speed = 200 + Kd * derivative;
+  } else if (error > 0) {
+    speed = 150 + Kd * derivative;
+  } else {
+    speed = 0;
+  }
+
+  // Ensure speed is within valid PWM range
+  return constrain(speed, 0, 255);
 }
